@@ -28,7 +28,7 @@ class Phrase {
   }
 
   showMatchedLetter(letter) {
-    const lis = $(`.${letter}`);
+    const lis = $(`.${letter.toLowerCase()}`);
 
     lis.addClass('show');
   }
