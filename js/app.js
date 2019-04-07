@@ -15,10 +15,12 @@ startButton.click((e) => {
 });
 
 keys.click((e) => {
-    instance.handleInteraction(e);
+    if(instance){
+        instance.handleInteraction(e);
+    }
 });
 
-$(document).keypress((e) => {
+document.addEventListener('keypress', (e) => {
     // instance.handleInteraction(e);
     if(instance){
         instance.handleInteraction(e);

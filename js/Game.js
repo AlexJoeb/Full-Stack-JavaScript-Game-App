@@ -23,6 +23,12 @@ class Game {
         this._activePhrase = this.getRandomPhrase();
         this._activePhrase.addPhraseToDisplay();
         this.resetKeyboard();
+        this.resetLives();
+    }
+
+    resetLives(){
+        this._missed = 0;
+        $('.tries img').each(e => $('.tries img')[e].setAttribute('src', 'images/liveHeart.png'));
     }
 
     resetKeyboard(){
@@ -41,21 +47,21 @@ class Game {
     }
 
     handleInteraction(event) {
-        const t = $(event.target);
+        const t = event.target ? $(event.target) : null;
         const text = event.key ? event.key : t.text();
 
         // Disable the selected letter's onscreen keyboard button
         const button = this.getButtonByLetter(text);
     
+        
         if (!button) {
-            console.log("Can't find that button!");
             return;
         }
 
-        $(button).prop('disabled', true);
+        if($(button).hasClass('wrong')) return;
+
         // If the phrase does not include the guessed letter, add the wrong CSS class to the selected letter's keyboard button and call the removeLife() method.
         // If the phrase includes the guessed letter, add the chosen CSS class to the selected letter's keyboard button, call the showMatchedLetter() method on the phrase, and then call the checkForWin() method. If the player has won the game, also call the gameOver() method.
-
         if (this._activePhrase.checkLetter(text)) {
             $(button).addClass('chosen');
             this._activePhrase.showMatchedLetter(text);
